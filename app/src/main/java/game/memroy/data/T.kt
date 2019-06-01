@@ -1,2 +1,0 @@
-package game.memroy.data
-

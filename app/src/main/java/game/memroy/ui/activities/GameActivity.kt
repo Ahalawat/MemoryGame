@@ -39,11 +39,11 @@ class GameActivity : BaseActivity(), View.OnClickListener {
             secondClickedIv?.let { it.visibility = View.INVISIBLE }
         } else {
             firstClickedIv?.let {
-                setImageViewDrawable(it,  R.drawable.rounded_bg)
+                setImageViewDrawable(it, R.drawable.rounded_bg)
                 it.isClickable = true
             }
             secondClickedIv?.let {
-                setImageViewDrawable(it,  R.drawable.rounded_bg)
+                setImageViewDrawable(it, R.drawable.rounded_bg)
                 it.isClickable = true
             }
         }
@@ -103,7 +103,6 @@ class GameActivity : BaseActivity(), View.OnClickListener {
                 val options = RequestOptions()
                 options.apply {
                     fitCenter()
-                    override(clickedIv.width, clickedIv.height)
                 }
                 Glide.with(this)
                     .load(getImage(cards[i].url))
@@ -188,20 +187,23 @@ class GameActivity : BaseActivity(), View.OnClickListener {
 
     private fun getImageView(): ImageView {
         val iv = ImageView(this)
-        iv.layoutParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                1.0f
-            )
-        iv.id = View.generateViewId()
-        iv.scaleType = ImageView.ScaleType.FIT_CENTER
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            iv.setImageDrawable(getDrawable( R.drawable.rounded_bg))
-        } else {
-            iv.setImageDrawable(this.resources.getDrawable(R.drawable.rounded_bg))
+        iv.apply {
+            layoutParams =
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    1.0f
+                )
+            adjustViewBounds = false
+            id = View.generateViewId()
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                setImageDrawable(getDrawable(R.drawable.rounded_bg))
+            } else {
+                setImageDrawable(this.resources.getDrawable(R.drawable.rounded_bg))
+            }
         }
+
         return iv
     }
 
